@@ -1,2 +1,2 @@
-import { Point, Cluster, Weights } from './common/types';
-export declare function clusterize(rawData: Point[], clusterNumber: number, columnWeights?: Weights): Cluster[];
+import { Point, Cluster, Weights, FilteredKeys } from './common/types';
+export declare function clusterize(rawData: Point[], clusterNumber: number, columnWeights?: Weights, filteredKeys?: FilteredKeys): Cluster[];

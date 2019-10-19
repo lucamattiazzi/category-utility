@@ -10,7 +10,8 @@ const data = [
   { id: '7', size: 'small', color: 'blue' },
 ]
 
-const weights = { size: 0 }
-const clusters = clusterize(data, 2, weights)
+const weights = { size: 0.5, color: 2 }
+const filteredValues = ['id']
+const clusters = clusterize(data, 2, weights, filteredValues)
 
-console.log('clusters', clusters)
+console.log(clusters)

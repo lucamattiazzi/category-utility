@@ -1,5 +1,4 @@
 export interface Point {
-    id: string;
     [key: string]: string;
 }
 export interface Cluster extends Array<Point> {
@@ -9,4 +8,6 @@ export interface Counted {
 }
 export interface Weights {
     [key: string]: number;
+}
+export interface FilteredKeys extends Array<string> {
 }
