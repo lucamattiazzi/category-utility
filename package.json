@@ -1,0 +1,27 @@
+{
+  "name": "category-utility",
+  "version": "1.0.0",
+  "description": "Category Utility clustering for categorical data.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "test": "node dist/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YeasterEgg/category-utility"
+  },
+  "keywords": ["clustering", "categorical data", "category utility"],
+  "author": {
+    "email": "l.d.mattiazzi@gmail.com",
+    "name": "Luca Mattiazzi",
+    "url": "https://grokked.it"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^12.6.2",
+    "typescript": "^3.5.3"
+  },
+  "dependencies": {}
+}
