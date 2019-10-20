@@ -1,5 +1,5 @@
-import { Point, Cluster, Weights, FilteredKeys } from './common/types'
-import { count, sum, flat, stupidDeepCopy } from './common/utils'
+import { Point, Cluster, Weights, FilteredKeys } from './types'
+import { countBy, sum, flatten, cloneDeep } from 'lodash'
 
 function getCondExpGen(weights: Weights, filteredKeys: FilteredKeys) {
   const getUncondExp = getUncondExpGen(weights, filteredKeys)
@@ -15,7 +15,7 @@ function getUncondExpGen(weights: Weights, filteredKeys: FilteredKeys) {
     const usefulColumns = columns.filter(c => !filteredKeys.includes(c))
     const columnExpectations = usefulColumns.map<number>(k => {
       const allColumnValues = values.map(p => p[k])
-      const countedColumnValues = count(allColumnValues)
+      const countedColumnValues = countBy(allColumnValues)
       const sqProbs = Object.values(countedColumnValues).map(v => (v / valueCount) ** 2)
       const summed = sum(sqProbs)
       const weight = weights[k] === undefined ? 1 : weights[k]
@@ -29,7 +29,7 @@ function computeCUGen(weights: Weights, filteredKeys: FilteredKeys) {
   const getUncondExp = getUncondExpGen(weights, filteredKeys)
   const getCondExp = getCondExpGen(weights, filteredKeys)
   return function computeCU(clusters: Cluster[]) {
-    const allItems = flat(clusters)
+    const allItems = flatten(clusters)
     const totalItems = allItems.length
     const clusterProbabilities = clusters.map<number>(c => c.length / totalItems)
     const uncondExp = getUncondExp(allItems)
@@ -56,7 +56,7 @@ export function clusterize(
   for (const point of data) {
     let cu, bestClustering
     for (let i = 0; i < clusters.length; i++) {
-      const copy = stupidDeepCopy(clusters)
+      const copy = cloneDeep(clusters)
       copy[i].push(point)
       const currentCU = computeCU(copy)
       if (cu !== undefined && cu > currentCU) continue

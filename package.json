@@ -1,6 +1,6 @@
 {
   "name": "category-utility",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Category Utility clustering for categorical data.",
   "main": "dist/index.js",
   "scripts": {
@@ -12,7 +12,11 @@
     "type": "git",
     "url": "https://github.com/YeasterEgg/category-utility"
   },
-  "keywords": ["clustering", "categorical data", "category utility"],
+  "keywords": [
+    "clustering",
+    "categorical data",
+    "category utility"
+  ],
   "author": {
     "email": "l.d.mattiazzi@gmail.com",
     "name": "Luca Mattiazzi",
@@ -20,8 +24,11 @@
   },
   "license": "ISC",
   "devDependencies": {
+    "@types/lodash": "^4.14.144",
     "@types/node": "^12.6.2",
     "typescript": "^3.5.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lodash": "^4.17.15"
+  }
 }

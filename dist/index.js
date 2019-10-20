@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const utils_1 = require("./common/utils");
+const lodash_1 = require("lodash");
 function getCondExpGen(weights, filteredKeys) {
     const getUncondExp = getUncondExpGen(weights, filteredKeys);
     return function getCondExp(clusters) {
@@ -14,20 +14,20 @@ function getUncondExpGen(weights, filteredKeys) {
         const usefulColumns = columns.filter(c => !filteredKeys.includes(c));
         const columnExpectations = usefulColumns.map(k => {
             const allColumnValues = values.map(p => p[k]);
-            const countedColumnValues = utils_1.count(allColumnValues);
+            const countedColumnValues = lodash_1.countBy(allColumnValues);
             const sqProbs = Object.values(countedColumnValues).map(v => (v / valueCount) ** 2);
-            const summed = utils_1.sum(sqProbs);
+            const summed = lodash_1.sum(sqProbs);
             const weight = weights[k] === undefined ? 1 : weights[k];
             return summed * weight;
         });
-        return utils_1.sum(columnExpectations);
+        return lodash_1.sum(columnExpectations);
     };
 }
 function computeCUGen(weights, filteredKeys) {
     const getUncondExp = getUncondExpGen(weights, filteredKeys);
     const getCondExp = getCondExpGen(weights, filteredKeys);
     return function computeCU(clusters) {
-        const allItems = utils_1.flat(clusters);
+        const allItems = lodash_1.flatten(clusters);
         const totalItems = allItems.length;
         const clusterProbabilities = clusters.map(c => c.length / totalItems);
         const uncondExp = getUncondExp(allItems);
@@ -47,7 +47,7 @@ function clusterize(rawData, clusterNumber, columnWeights = {}, filteredKeys = [
     for (const point of data) {
         let cu, bestClustering;
         for (let i = 0; i < clusters.length; i++) {
-            const copy = utils_1.stupidDeepCopy(clusters);
+            const copy = lodash_1.cloneDeep(clusters);
             copy[i].push(point);
             const currentCU = computeCU(copy);
             if (cu !== undefined && cu > currentCU)
